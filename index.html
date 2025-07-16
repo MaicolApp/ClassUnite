@@ -1,37 +1,343 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ClassUnite Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control Classroom</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* Custom styles for responsiveness if needed, though Tailwind handles most */
+        .min-h-screen {
+            min-height: 100vh;
+        }
+        .overflow-auto {
+            overflow: auto;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>📚 ClassUnite</h1>
-  </header>
+<body class="min-h-screen bg-gray-100 font-sans antialiased flex flex-col md:flex-row">
 
-  <nav>
-    <ul>
-      <li>Inicio</li>
-      <li>Clases</li>
-      <li>Tareas</li>
-      <li>Perfil</li>
-    </ul>
-  </nav>
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-64 bg-white shadow-lg p-6 flex flex-col rounded-br-lg rounded-bl-lg md:rounded-bl-none md:rounded-tr-lg">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold text-blue-600">Classroom</h1>
+            <p class="text-sm text-gray-500">Panel de Control</p>
+        </div>
+        <nav class="flex-grow">
+            <ul class="space-y-3">
+                <li>
+                    <button id="nav-home" class="w-full text-left flex items-center p-3 rounded-lg transition duration-200 text-gray-700 hover:bg-gray-100">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                        </svg>
+                        Inicio
+                    </button>
+                </li>
+                <li>
+                    <button id="nav-courses" class="w-full text-left flex items-center p-3 rounded-lg transition duration-200 text-gray-700 hover:bg-gray-100">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                            <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"></path>
+                        </svg>
+                        Cursos
+                    </button>
+                </li>
+                <li>
+                    <button id="nav-assignments" class="w-full text-left flex items-center p-3 rounded-lg transition duration-200 text-gray-700 hover:bg-gray-100">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M9 2a1 1 0 00-1 1v1H7a2 2 0 00-2 2v6a2 2 0 002 2h1v1a1 1 0 102 0v-1h1a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 00-1-1zM7 6h6v6H7V6z" clipRule="evenodd"></path>
+                        </svg>
+                        Tareas
+                    </button>
+                </li>
+                <li>
+                    <button id="nav-grades" class="w-full text-left flex items-center p-3 rounded-lg transition duration-200 text-gray-700 hover:bg-gray-100">
+                        <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 1H4a1 1 0 00-1 1v8a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
+                            <path fillRule="evenodd" d="M10 9a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zm-4 4a1 1 0 011-1h2a1 1 0 110 2H7a1 1 0 01-1-1z" clipRule="evenodd"></path>
+                        </svg>
+                        Calificaciones
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </aside>
 
-  <main>
-    <section class="course-card">
-      <h2>Matemáticas</h2>
-      <p>Prof. Ana López</p>
-    </section>
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-1 p-6 md:p-10 overflow-auto">
+        <!-- Content will be loaded here by JavaScript -->
+    </main>
 
-    <section class="course-card">
-      <h2>Ciencias Naturales</h2>
-      <p>Prof. Juan Pérez</p>
-    </section>
-  </main>
+    <script type="module">
+        // Placeholder for Firebase configuration and initialization
+        // In a real app, you would initialize Firebase here and listen to auth state changes.
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        // import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-  <script src="script.js"></script>
+        let db = null; // Placeholder for Firestore instance
+        let auth = null; // Placeholder for Auth instance
+        let userId = 'demo-user-id-12345'; // Simulated user ID for demonstration
+        let isAuthReady = true; // Simulated auth readiness
+
+        // Simulate Firebase initialization and auth state
+        document.addEventListener('DOMContentLoaded', () => {
+            // const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+            // if (Object.keys(firebaseConfig).length > 0) {
+            //     const app = initializeApp(firebaseConfig);
+            //     db = getFirestore(app);
+            //     auth = getAuth(app);
+
+            //     const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+            //     const setupAuth = async () => {
+            //         try {
+            //             if (initialAuthToken) {
+            //                 await signInWithCustomToken(auth, initialAuthToken);
+            //             } else {
+            //                 await signInAnonymously(auth);
+            //             }
+            //         } catch (error) {
+            //             console.error("Firebase Auth Error:", error);
+            //         }
+            //     };
+
+            //     onAuthStateChanged(auth, (user) => {
+            //         if (user) {
+            //             userId = user.uid;
+            //         } else {
+            //             userId = crypto.randomUUID(); // Anonymous or random ID if not authenticated
+            //         }
+            //         isAuthReady = true;
+            //         renderPage(currentPage); // Re-render to show userId
+            //     });
+
+            //     setupAuth();
+            // } else {
+            //     console.warn("Firebase config not found. Running in demo mode.");
+            // }
+
+            // Initial page load
+            renderPage('home');
+        });
+
+
+        const mainContent = document.getElementById('main-content');
+        let currentPage = 'home'; // Default page
+
+        // Function to update active navigation button style
+        function updateNavButtons(activePage) {
+            document.querySelectorAll('aside button').forEach(button => {
+                button.classList.remove('bg-blue-500', 'text-white', 'shadow-md');
+                button.classList.add('text-gray-700', 'hover:bg-gray-100');
+            });
+            const activeButton = document.getElementById(`nav-${activePage}`);
+            if (activeButton) {
+                activeButton.classList.remove('text-gray-700', 'hover:bg-gray-100');
+                activeButton.classList.add('bg-blue-500', 'text-white', 'shadow-md');
+            }
+        }
+
+        // Function to render the Home Page content
+        function renderHomePage() {
+            return `
+                <div class="p-6 bg-white rounded-lg shadow-md">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Bienvenido al Panel de Control</h2>
+                    <p class="text-gray-600">Aquí podrás ver un resumen de tus cursos, tareas pendientes y anuncios importantes.</p>
+                    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-blue-800 mb-2">Cursos Activos</h3>
+                            <p class="text-blue-700 text-2xl">3</p>
+                        </div>
+                        <div class="bg-yellow-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-yellow-800 mb-2">Tareas Pendientes</h3>
+                            <p class="text-yellow-700 text-2xl">5</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                            <h3 class="font-semibold text-green-800 mb-2">Anuncios Recientes</h3>
+                            <p class="text-green-700 text-2xl">2</p>
+                        </div>
+                    </div>
+                    ${userId ? `
+                        <p class="mt-4 text-sm text-gray-500">
+                            ID de Usuario: <span class="font-mono bg-gray-100 p-1 rounded">${userId}</span>
+                        </p>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // Function to render the Courses Page content
+        function renderCoursesPage() {
+            return `
+                <div class="p-6 bg-white rounded-lg shadow-md">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Mis Cursos</h2>
+                    <ul class="space-y-4">
+                        <li class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold text-gray-700">Matemáticas Avanzadas</h3>
+                                <p class="text-sm text-gray-500">Profesor: Dr. García</p>
+                            </div>
+                            <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">Ver Curso</button>
+                        </li>
+                        <li class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold text-gray-700">Historia Mundial II</h3>
+                                <p class="text-sm text-gray-500">Profesora: Lic. Pérez</p>
+                            </div>
+                            <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">Ver Curso</button>
+                        </li>
+                        <li class="bg-gray-50 p-4 rounded-lg shadow-sm flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold text-gray-700">Programación Web</h3>
+                                <p class="text-sm text-gray-500">Profesor: Ing. López</p>
+                            </div>
+                            <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200">Ver Curso</button>
+                        </li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Function to render the Assignments Page content
+        function renderAssignmentsPage() {
+            return `
+                <div class="p-6 bg-white rounded-lg shadow-md">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Mis Tareas</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white rounded-lg shadow-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-left text-gray-600 uppercase text-sm leading-normal">
+                                    <th class="py-3 px-6">Tarea</th>
+                                    <th class="py-3 px-6">Curso</th>
+                                    <th class="py-3 px-6">Fecha Límite</th>
+                                    <th class="py-3 px-6">Estado</th>
+                                    <th class="py-3 px-6">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 text-sm font-light">
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 whitespace-nowrap">Ensayo sobre la Revolución Industrial</td>
+                                    <td class="py-3 px-6">Historia Mundial II</td>
+                                    <td class="py-3 px-6">2025-07-25</td>
+                                    <td class="py-3 px-6"><span class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">Pendiente</span></td>
+                                    <td class="py-3 px-6">
+                                        <button class="text-blue-500 hover:text-blue-700 font-medium">Entregar</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 whitespace-nowrap">Ejercicio de Cálculo Diferencial</td>
+                                    <td class="py-3 px-6">Matemáticas Avanzadas</td>
+                                    <td class="py-3 px-6">2025-07-20</td>
+                                    <td class="py-3 px-6"><span class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">Pendiente</span></td>
+                                    <td class="py-3 px-6">
+                                        <button class="text-blue-500 hover:text-blue-700 font-medium">Entregar</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 whitespace-nowrap">Proyecto Final de Programación</td>
+                                    <td class="py-3 px-6">Programación Web</td>
+                                    <td class="py-3 px-6">2025-08-10</td>
+                                    <td class="py-3 px-6"><span class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">Pendiente</span></td>
+                                    <td class="py-3 px-6">
+                                        <button class="text-blue-500 hover:text-blue-700 font-medium">Entregar</button>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6 whitespace-nowrap">Cuestionario de Álgebra Lineal</td>
+                                    <td class="py-3 px-6">Matemáticas Avanzadas</td>
+                                    <td class="py-3 px-6">2025-07-10</td>
+                                    <td class="py-3 px-6"><span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Entregado</span></td>
+                                    <td class="py-3 px-6">
+                                        <button class="text-gray-400 cursor-not-allowed" disabled>Entregado</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to render the Grades Page content
+        function renderGradesPage() {
+            return `
+                <div class="p-6 bg-white rounded-lg shadow-md">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Mis Calificaciones</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white rounded-lg shadow-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-left text-gray-600 uppercase text-sm leading-normal">
+                                    <th class="py-3 px-6">Curso</th>
+                                    <th class="py-3 px-6">Tarea</th>
+                                    <th class="py-3 px-6">Calificación</th>
+                                    <th class="py-3 px-6">Comentarios</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-600 text-sm font-light">
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6">Matemáticas Avanzadas</td>
+                                    <td class="py-3 px-6">Cuestionario de Álgebra Lineal</td>
+                                    <td class="py-3 px-6"><span class="font-bold text-green-600">95/100</span></td>
+                                    <td class="py-3 px-6">Excelente trabajo.</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6">Historia Mundial II</td>
+                                    <td class="py-3 px-6">Reporte de Lectura 1</td>
+                                    <td class="py-3 px-6"><span class="font-bold text-yellow-600">80/100</span></td>
+                                    <td class="py-3 px-6">Buen análisis, mejorar la estructura.</td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="py-3 px-6">Programación Web</td>
+                                    <td class="py-3 px-6">Práctica de HTML/CSS</td>
+                                    <td class="py-3 px-6"><span class="font-bold text-green-600">90/100</span></td>
+                                    <td class="py-3 px-6">Código limpio y responsivo.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Main function to render the selected page
+        function renderPage(page) {
+            currentPage = page;
+            updateNavButtons(page);
+            switch (page) {
+                case 'home':
+                    mainContent.innerHTML = renderHomePage();
+                    break;
+                case 'courses':
+                    mainContent.innerHTML = renderCoursesPage();
+                    break;
+                case 'assignments':
+                    mainContent.innerHTML = renderAssignmentsPage();
+                    break;
+                case 'grades':
+                    mainContent.innerHTML = renderGradesPage();
+                    break;
+                default:
+                    mainContent.innerHTML = renderHomePage();
+            }
+        }
+
+        // Add event listeners to navigation buttons
+        document.getElementById('nav-home').addEventListener('click', () => renderPage('home'));
+        document.getElementById('nav-courses').addEventListener('click', () => renderPage('courses'));
+        document.getElementById('nav-assignments').addEventListener('click', () => renderPage('assignments'));
+        document.getElementById('nav-grades').addEventListener('click', () => renderPage('grades'));
+
+        // Initial render on page load (handled by DOMContentLoaded listener above)
+    </script>
 </body>
 </html>
+
